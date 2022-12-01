@@ -25,9 +25,9 @@ set clipboard=unnamed
 " backspace work "
 set backspace=indent,eol,start
 
-noremap <LEADER><CR> :nohlsearch<CR>
-noremap <LEADER>j 20jzz
-noremap <LEADER>k 20kzz
+noremap <Space><CR> :nohlsearch<CR>
+noremap <Space>j 20jzz
+noremap <Space>k 20kzz
 
 map <F8> :e $MYVIMRC<CR>
 map R :source $MYVIMRC<CR>
@@ -79,8 +79,8 @@ function! Change_nu()
         endif
 endfunction
 
-map <LEADER>n :call Change_nu()<CR>
+map <Space>n :call Change_nu()<CR>
 
-map g<LEADER> 2g;a
+map g<Space> 2g;a
 
 
