@@ -13,17 +13,16 @@ set wildmenu
 set hlsearch
 exec "nohlsearch"
 set incsearch
-let mapleader = " "
 
 " theme
-colorscheme pablo
-" windows terminal cursor setting
-"let &t_SI = "\e[6 q"
-"let &t_EI = "\e[2 q"
+colorscheme murphy
 "set background=dark
 " 縮排與tab鍵一致
 set tabstop=4
 set shiftwidth=4
+
+" pyhton path
+" set pythonthreedll=C:\Users\user\AppData\Local\Programs\Python\Python311.dll
 
 " 檔案判斷自動縮排與語法高亮
 filetype indent on
@@ -49,17 +48,18 @@ set clipboard=unnamed
 set backspace=indent,eol,start
 
 " 取消查找與快速移動
-noremap <LEADER><CR> :nohlsearch<CR>
-noremap <LEADER>j 20jzz
-noremap <LEADER>k 20kzz
+noremap <SPACE><CR> :nohlsearch<CR>
+noremap <SPACE>j 20jzz
+noremap <SPACE>k 20kzz
 
 " vimrc配置修改與載入
 noremap <F8> :tabe<CR>:e $MYVIMRC<CR>
 noremap <F9> :tabe<CR>:e C:\Users\user\vimfiles\coc-config.vim<CR>
-noremap R :source $MYVIMRC<CR>:source $HOME\vimfiles\coc-config.vim<CR>
+noremap R :source $MYVIMRC<CR>
 
 " 基礎鍵修改
 noremap s <nop>
+noremap t <nop>
 noremap S :w<CR>
 noremap Q :q<CR>
 
@@ -76,6 +76,11 @@ map sd sh:Ex<CR>:vertical resize -15<CR>
 noremap st :tabe<CR>
 noremap sp :-tabnext<CR>
 noremap sn :+tabnext<CR>
+
+" Buffer Switch
+noremap <A-j> :bnext<CR>
+noremap <A-k> :bprevious<CR>
+noremap <A-c> :%bd\|e#<CR>
 
 " 自動縮排
 noremap ! gg=G``
@@ -98,7 +103,7 @@ func! SSHCompileRunGcc()
 	elseif &filetype == 'sh'
 		:!time bash %
 	elseif &filetype == 'python'
-		exec "! python %"
+		# exec "! python %"
 	elseif &filetype == 'html'
 		exec "! chrome % &"
 	endif
@@ -122,16 +127,24 @@ func! CompileRunGcc()
 	endif
 endfunc
 
-map cppe i#include<iostream><CR><CR>using namespace std;<CR><CR>int main(<Right>{<CR>return 0;<Esc>O
-
-noremap g<LEADER> 2g;a
-
-
 call plug#begin()
 
-Plug 'godlygeek/tabular'
-Plug 'preservim/vim-markdown'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-so $HOME\vimfiles\coc-config.vim
+so $HOME\vimfiles\plugConfig\coc-config.vim
+
+Plug 'voldikss/vim-floaterm'
+noremap tl :FloatermNew<CR>
+so $HOME\vimfiles\plugConfig\floatTerm-config.vim
+
+Plug 'kdheepak/lazygit.nvim'
+noremap <SPACE>gg :LazyGit<CR>
+
+Plug 'preservim/nerdtree'
+nnoremap sd :NERDTreeToggle<CR>
+
+Plug 'iamcco/markdown-preview.nvim', { 'do': ':call mkdp#util#install()', 'for': 'markdown' }
+nmap <SPACE>m <Plug>MarkdownPreview
 
 call plug#end()
+
+so $HOME\vimfiles\plugConfig\toggle.vim
