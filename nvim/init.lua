@@ -11,6 +11,9 @@ function imap(shortcut, command)
 	map('i', shortcut, command)
 end
 
+-- modify Leader Key
+vim.g.mapleader = ' '
+
 -- 檔案編碼一致
 vim.o.encoding='utf-8'
 vim.o.termencoding='utf-8'
@@ -56,6 +59,7 @@ nmap("R",":Lazy<CR>")
 -- 基礎鍵修改
 nmap("s","<nop>")
 nmap("t","<nop>")
+nmap("T","<nop>")
 nmap("S",":w<CR>")
 nmap("Q",":q<CR>")
 
@@ -246,8 +250,8 @@ require("neo-tree").setup({
             ["<esc>"] = "revert_preview",
             ["P"] = { "toggle_preview", config = { use_float = true } },
             ["l"] = "focus_preview",
-            ["S"] = "open_split",
-            ["s"] = "open_vsplit",
+            [","] = "open_split",
+            ["."] = "open_vsplit",
             -- ["S"] = "split_with_window_picker",
             -- ["s"] = "vsplit_with_window_picker",
             ["t"] = "open_tabnew",
@@ -376,8 +380,11 @@ require("neo-tree").setup({
         }
       })
 
+-- telescope plugins
+
 vim.cmd([[
 	color nord
+	"hi CursorLine   cterm=NONE ctermbg=237 ctermfg=white guibg=darkred guifg=white
 	so C:\Users\user\AppData\Local\nvim\config\coc-config.vim
 	so C:\Users\user\AppData\Local\nvim\config\floatTerm-config.vim
 ]])
@@ -385,5 +392,12 @@ vim.cmd([[
 
 nmap("tl",":FloatermNew<CR>")
 nmap("<SPACE>gg",":LazyGit<CR>")
-nmap("sd",":Neotree position=right<CR>")
+nmap("T",":NeoTreeFocusToggle<CR>")
 nmap("<SPACE>m","<Plug>MarkdownPreview")
+nmap("<A-b>",":lua require('buffer_manager.ui').toggle_quick_menu()<CR>")
+
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
